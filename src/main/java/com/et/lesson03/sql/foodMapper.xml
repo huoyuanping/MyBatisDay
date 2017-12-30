@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  sql这个元素可以被用来定义可重用的 SQL 代码段，可以包含在其他语句中。
+ -->
+<mapper namespace="com.et.lesson03.sql.FoodMapper">
+ 	<sql id="commonSql">
+ 		select * from 
+ 	</sql>
+ 
+  <select id="queryFood" resultType="java.util.Map">
+ 	<include refid="commonSql"></include>
+  	food where  foodname=#{param1} and price=#{param2} 
+  </select>
+</mapper>

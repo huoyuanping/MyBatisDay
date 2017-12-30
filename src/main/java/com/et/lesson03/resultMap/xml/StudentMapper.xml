@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.lesson03.resultMap.xml.StudentMapper">
+ 	<!-- 映射多对一的关系
+  	多对一使用的关联<association property="关联的属性名"></association>
+   -->
+		<resultMap type="student" id="studentMap" autoMapping="true">
+ 	<!-- 列和属性的关系 主键使用id 非主键使用result -->
+ 		<id column="sid" property="sid"/>
+ 		<!-- select * from grade where gid=${学生信息中的gid} 
+ 		select="queryGradeById"指定学生的班级
+ 		fetchType="lazy"  延迟加载
+ 		-->
+ 		<association property="grade" column="gid" fetchType="lazy" select="com.et.lesson03.resultMap.xml.GradeMapper.queryGradeById">
+ 		</association>
+ 	</resultMap>
+ 	<!-- 多对一 -->
+ 	<select id="queryStudentById" resultMap="studentMap">
+ 		select * from student where sid=#{0}
+  	</select>
+  	
+  <!-- 一对多 -->
+ 	<select id="queryStudentByGid" resultMap="studentMap">
+ 		select * from student where gid=#{0}
+  	</select>
+</mapper>

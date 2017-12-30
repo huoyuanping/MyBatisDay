@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  	接口绑定 将接口中的方法和对应的sql声明进行绑定
+  	接口绑定的参数 可以通过索引的方式获取 索引从0开始 也可用param1 param2
+  	('s','sex') 0='sex' 1='abc'
+  	param1='sex'  param2='abc'
+ -->
+<mapper namespace="com.et.lesson02.xml.FoodMap">
+ 
+ 
+  <select id="queryFood" resultType="java.util.Map">
+  <!--
+  	select * from food where  foodname=#{0} and price=#{1} 
+  -->
+  	select * from food where  foodname=#{param1} and price=#{param2} 
+  </select>
+ 
+  
+  <delete id="deleteFood" >
+  delete from FOOD where FOODID=#{0}
+  </delete>
+	<!-- 通过自定义类型 -->
+  <select id="queryFoodByName" resultType="food">
+  <!--
+  	
+  -->
+  	select * from food where  foodname like '%${foodName}%'
+  </select>
+  
+  
+  <insert id="saveFood" >
+  	<!-- 在程序中获取主键    将获取到的主键塞入参数foodId中
+  	keyProperty="告诉塞入的属性名"
+  	order="BEFORE"在执行insert语句之前
+  	statementType="STATEMENT" 表示sql语句
+  	-->
+  	<selectKey keyProperty="foodId" order="BEFORE"  resultType="int" statementType="STATEMENT">
+  		select Food_SEC.Nextval from dual
+  	</selectKey>
+  		insert into food values(#{foodId},#{foodName},#{price})
+  	</insert>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间 多个文件中的相同id
+   比如 a.xml (namespace=a)
+   id="test"
+    b.xml (namespace=b)
+   id="test"
+   a.test
+   b.test
+ -->
+<mapper namespace="a">
+  <select id="selectFood" resultType="java.util.Map">
+    select * from food
+  </select>
+  <select id="selectFoodById" resultType="java.util.Map" >
+    select * from food where foodid=1
+  </select>
+  
+  <!--使用#{键}方式 实际上是使用占位符 问号（？） 来替代 -->
+  <select id="selectFoodParam" resultType="java.util.Map">
+  	select * from food where price=#{price} and foodname=#{foodname}
+  </select>
+   <!--使用${键}方式 使用是直接替换对应的的键 注意如果是字符串说过添加'' -->
+  <select id="selectFoodByParam" resultType="java.util.Map">
+  	select * from food where price=${price} and foodname='${foodname}'
+  </select>
+  <insert id="saveFood">
+  	insert into food values(FOOD_SEC.nextval,#{foodname},#{price})
+  </insert>
+  
+  
+  <delete id="deleteFood" parameterType="java.util.Map">
+  <!--
+  	delete from FOOD where FOODID=5	
+  -->
+  delete from FOOD where FOODID=#{foodid}
+  </delete>
+  <update id="updateFood"  parameterType="java.util.Map" >
+  	<!-- update FOOD set FOODNAME='酸辣土豆丝' where FOODID =4 -->
+  	update FOOD set FOODNAME=#{foodname},PRICE=#{price} where FOODID =#{foodid}
+  </update>
+  <insert id="insertFood" parameterType="java.util.Map">
+  	  insert into food(FOODID,FOODNAME,PRICE) values(#{foodid},#{foodname},#{price}) 
+  </insert>
+  
+  
+</mapper>

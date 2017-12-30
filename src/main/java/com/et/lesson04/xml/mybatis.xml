@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 是mybatis的核心配置
+		1.数据库的连接信息
+	告诉properties文件位置 -->
+    <properties resource="com/et/lesson04/jdbc.properties"></properties>
+    <!-- 给所有的类取别名 别名为类的首字母小写-->
+    <typeAliases>
+    	<package name="com.et.lesson04.xml"/>
+    </typeAliases>
+	
+<environments default="development">
+<environment id="development">
+	<!-- 事务管理器 默认使用jdbc的事务（自动提交） -->
+<transactionManager type="JDBC" />
+<dataSource type="POOLED">
+<property name="driver" value="${driverClass}" />
+<property name="url" value="${url}" />
+<property name="username" value="${username1}" />
+<property name="password" value="${password2}" />
+</dataSource>
+</environment>
+</environments>
+<!-- 键和sql语句映射 -->
+<mappers>
+	<mapper resource="com/et/lesson04/xml/StudentMapper.xml" />
+</mappers>
+
+</configuration> 
+
